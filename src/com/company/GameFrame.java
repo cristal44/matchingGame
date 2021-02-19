@@ -6,20 +6,38 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class GameFrame extends JFrame {
-    private Frame frame;
-    private String pattern;
-    private String level;
+    private Pattern pattern;
+    private Level level;
     private MenuButton homeButton, playButton, pauseButton, startOverButton;
     private GamePanel mainPanel, menuPanel,cardPanel;
+    private int cardRow = 0;
+    private int cardCols = 0;
 
-    public GameFrame(String pattern, String level) {
-        this.pattern = pattern;
-        this.level = level;
+    public GameFrame(int patternIndex, int levelIndex) {
+        this.pattern =Pattern.getPattern(patternIndex);
+        this.level =Level.getLevel(levelIndex);
 
+        setCardLevel();
         initialMenuButtons();
         setPanels();
         setCards();
         setupFrame();
+    }
+
+    private void setCardLevel(){
+        switch (level){
+            case Easy:
+                cardRow = 2;
+                cardCols = 4;
+                break;
+            case Medium:
+                cardRow = 3;
+                cardCols = 4;
+                break;
+            case Hard:
+                cardRow = 3;
+                cardCols = 6;
+        }
     }
 
     private void setupFrame() {
@@ -76,6 +94,7 @@ public class GameFrame extends JFrame {
         });
     }
 
+
     public void setPanels(){
         mainPanel = new GamePanel();
 
@@ -87,16 +106,17 @@ public class GameFrame extends JFrame {
         menuPanel.add(startOverButton);
 
         cardPanel = new GamePanel();
-        cardPanel.setPreferredSize(new Dimension(500,350));
-        cardPanel.setLayout(new GridLayout(2,4,10,10));
+        cardPanel.setLayout(new GridLayout(cardRow, cardCols,10,10));
 
         mainPanel.add(menuPanel);
         mainPanel.add(cardPanel);
     }
 
     public void setCards(){
-        for (int i = 0; i < 8; i++) {
+        for (int i = 0; i < cardRow * cardCols; i++) {
             JButton button = new JButton();
+            button.setSize(150, 200);
+            button.setOpaque(true);
             ImageIcon imageIcon = new ImageIcon("src/images/orange.jpg");
             int offset = button.getInsets().left;
             button.setIcon(resizeIcon(imageIcon, button.getWidth()-offset, button.getHeight()-offset));

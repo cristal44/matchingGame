@@ -74,39 +74,31 @@ public class StartFrame extends JFrame {
     }
 
     private void selectPatternAndLevel() {
-        Object [] items = {"Animals", "Flowers", "Sports", "Shapes",};
-
-        Object input = JOptionPane.showOptionDialog(null ,
+        int patternIndex = JOptionPane.showOptionDialog(null ,
                 "Choose a Game Mode:",
                 "Game Mode",
                 JOptionPane.NO_OPTION,
                 JOptionPane.PLAIN_MESSAGE,
                 null
-                ,items,
+                , Pattern.getPatternList(),
                 "default");
 
-        System.out.println(input.toString());
-
-
-        String[] levels = {"Hard","Medium","Easy"};
-
-        Object level = JOptionPane.showOptionDialog(null ,
+        int levelIndex = JOptionPane.showOptionDialog(null ,
                 "Choose a Game Level:",
                 "Game Level",
                 JOptionPane.NO_OPTION,
                 JOptionPane.PLAIN_MESSAGE,
                 null
-                ,levels,
+                ,Level.getLevelList(),
                 "default");
 
-        System.out.println(level.toString());
 
         this.setVisible(false);
 
         SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {
-                GameFrame gameFrame = new GameFrame("Sport", "Easy");
+                GameFrame gameFrame = new GameFrame(patternIndex, levelIndex);
                 gameFrame.setVisible(true);
             }
         });

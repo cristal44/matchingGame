@@ -12,6 +12,8 @@ public class Main {
             public void run() {
                 StartFrame startFrame = new StartFrame();
                 startFrame.setVisible(true);
+//                GameFrame gameFrame = new GameFrame("Sport", "2");
+//                gameFrame.setVisible(true);
             }
         });
     }

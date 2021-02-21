@@ -10,7 +10,6 @@ public class CardManager {
     private Pattern pattern;
     private static CardManager cardManager = null;
     private static int totalMatched = 0;
-    private static GameFrame gameFrame;
 
     private List<Card> cards = new ArrayList<>();
     private List<Card> matchCards = new ArrayList<>();
@@ -31,8 +30,8 @@ public class CardManager {
         return cardManager;
     }
 
-    public static void init(int cardNumber, Pattern pattern, GameFrame frame) {
-        gameFrame = frame;
+    public static void init(int cardNumber, Pattern pattern) {
+
         cardManager = new CardManager(cardNumber, pattern);
     }
 
@@ -81,14 +80,11 @@ public class CardManager {
                         } catch (InterruptedException e) {
                             e.printStackTrace();
                         }
-                        String name = JOptionPane.showInputDialog(gameFrame, "Please enter your name:");
+                        String name = JOptionPane.showInputDialog(Frame.getInstance(), "Please enter your name:");
                         System.out.println(name);
                         if (name != null) {
-                            Utils.getInstance().add(new User(name, GameTimer.getElapsedTime()));
-                            gameFrame.addRankPanel();
-                            gameFrame.removeGamePanel();
-
-
+                            PlayerFile.getInstance().add(new User(name, GameTimer.getElapsedTime()));
+                            Frame.getInstance().removeGamePanel(Frame.rank);
                         }
                     }
                 }

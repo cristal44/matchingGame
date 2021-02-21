@@ -5,37 +5,29 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class StartFrame extends JFrame {
-    private JPanel startPanel, buttonPanel;
-    private JButton startButton;
-    private JButton quitButton;
+public class StartPanel extends JPanel {
+    private JPanel buttonPanel;
     private JLabel label;
+    private JButton startButton, quitButton;
+    private static StartPanel startPanel = null;
 
-    public StartFrame() {
-        initButton();
+    public static StartPanel getInstance(){
+        if (startPanel == null) {
+            startPanel = new StartPanel();
+        }
+        return startPanel;
+    }
+
+    private StartPanel() {
         setLabel();
-        setPanel();
-        initFrame();
-    }
-
-    private void initFrame() {
-        setSize(1000,800);
-        setLocationRelativeTo(null);
-        setTitle("Memory Matching Game");
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
-        add(startPanel);
-    }
-
-    private void setPanel() {
-        startPanel = new JPanel();
+        setButton();
 
         buttonPanel = new JPanel();
         buttonPanel.add(startButton);
         buttonPanel.add(quitButton);
 
-        startPanel.add(label);
-        startPanel.add(buttonPanel);
+        add(label);
+        add(buttonPanel);
     }
 
     private void setLabel(){
@@ -48,12 +40,8 @@ public class StartFrame extends JFrame {
         label.setIcon(new ImageIcon(newImage));
     }
 
-    private void setButtonSize(JButton button){
-        button.setSize(500,50);
-        button.setPreferredSize(new Dimension(500,50));
-    }
 
-    private void initButton() {
+    private void setButton() {
         startButton = new JButton("Start");
         setButtonSize(startButton);
         startButton.addActionListener(new ActionListener() {
@@ -72,6 +60,12 @@ public class StartFrame extends JFrame {
             }
         });
     }
+
+    private void setButtonSize(JButton button){
+        button.setSize(500,50);
+        button.setPreferredSize(new Dimension(500,50));
+    }
+
 
     private void selectPatternAndLevel() {
         int patternIndex = JOptionPane.showOptionDialog(null ,
@@ -92,29 +86,7 @@ public class StartFrame extends JFrame {
                 ,Level.getLevelList(),
                 "default");
 
-
-        this.setVisible(false);
-
-        SwingUtilities.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                GameFrame gameFrame = new GameFrame(patternIndex, levelIndex);
-                gameFrame.setVisible(true);
-            }
-        });
+        Frame.getInstance().removeStartPanel(patternIndex, levelIndex);
     }
-}
 
-//class ImagePanel extends JPanel{
-//    public ImagePanel() {
-//        setSize(1000,750);
-//        setOpaque(true);
-//    }
-//
-//    @Override
-//    protected void paintComponent(Graphics g) {
-//        super.paintComponent(g);
-//        ImageIcon imageIcon = new ImageIcon("src/images/cover2.jpg");
-//        g.drawImage(imageIcon.getImage(), 0,0, this.getWidth(),this.getHeight(),null);
-//    }
-//}
+}

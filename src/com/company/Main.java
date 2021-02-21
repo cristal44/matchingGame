@@ -10,10 +10,8 @@ public class Main {
         SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {
-                StartFrame startFrame = new StartFrame();
-                startFrame.setVisible(true);
-//                GameFrame gameFrame = new GameFrame(1, 2);
-//                gameFrame.setVisible(true);
+                Frame frame = Frame.getInstance();
+                frame.addPanel(StartPanel.getInstance());
             }
         });
     }

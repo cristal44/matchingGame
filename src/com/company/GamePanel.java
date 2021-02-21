@@ -12,14 +12,14 @@ public class GamePanel extends JPanel {
     private int cardRow = 0;
     private int cardCols = 0;
     private Pattern pattern;
-    private Level level;
+    public static Level level;
 
     public GamePanel(int patternIndex, int levelIndex) {
         setBackground(new Color(102, 163, 255));
         setOpaque(true);
 
-        this.pattern =Patterns.getInstance().getPattern(patternIndex);
-        this.level =Level.getLevel(levelIndex);
+        pattern =Patterns.getInstance().getPattern(patternIndex);
+        level =Level.getLevel(levelIndex);
 
         PlayerFile.getInstance().read();
         setCardLevel();

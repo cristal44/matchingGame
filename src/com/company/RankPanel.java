@@ -22,7 +22,7 @@ public class RankPanel extends JPanel {
         labelPanel = new Panel();
         labelPanel.setPreferredSize(new Dimension(1000,100));
         labelPanel.setLayout(new GridBagLayout());
-        JLabel label = new JLabel("Top 10 Ranking List");
+        JLabel label = new JLabel("Top 10 Players (Level: "+ GamePanel.level +")");
         label.setForeground(Color.WHITE);
         label.setFont(new Font("dialog", Font.BOLD, 28));
         labelPanel.add(label);

@@ -1,17 +1,18 @@
 package com.company;
 
 import javax.swing.*;
+import javax.swing.table.DefaultTableCellRenderer;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
+import java.util.List;
 
 public class GameFrame extends JFrame {
     private Pattern pattern;
     private Level level;
-    private MenuButton homeButton, playButton, pauseButton, startOverButton;
+    private MenuButton homeButton, pauseButton, startOverButton;
     private GamePanel mainPanel, menuPanel,cardPanel, timerPanel;
-//    private JPanel timerPanel;
+    private GamePanel rankPanel, labelPanel, tablePanel, buttonPanel;
     private JLabel timeLabel;
     private int cardRow = 0;
     private int cardCols = 0;
@@ -25,8 +26,65 @@ public class GameFrame extends JFrame {
         initialMenuButtons();
 
         setupFrame();
+//        addRankPanel();
 
         addGamePanel();
+    }
+
+    public void addRankPanel(){
+        rankPanel = new GamePanel();
+
+        labelPanel = new GamePanel();
+        labelPanel.setPreferredSize(new Dimension(1000,100));
+        labelPanel.setLayout(new GridBagLayout());
+        JLabel label = new JLabel("Top 10 Ranking List");
+        label.setForeground(Color.WHITE);
+        label.setFont(new Font("dialog", Font.BOLD, 28));
+        labelPanel.add(label);
+
+
+        tablePanel = new GamePanel();
+        tablePanel.setPreferredSize(new Dimension(1000,500));
+
+
+        String[] columnNames = {"", "", ""};
+        String[][] data = Utils.getInstance().getUserList();
+
+        JTable table = new JTable(data,columnNames);
+        table.setPreferredSize(new Dimension(800,400));
+        table.setRowHeight(40);
+        table.setFont(new Font("dialog", Font.PLAIN,20));
+
+        DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
+        centerRenderer.setHorizontalAlignment( SwingUtilities.CENTER );
+        table.setDefaultRenderer(String.class, centerRenderer);
+
+        tablePanel.add(table);
+
+
+
+        buttonPanel = new GamePanel();
+        buttonPanel.add(homeButton);
+        MenuButton restartButton = new MenuButton("Restart");
+        buttonPanel.add(restartButton);
+        restartButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                removeRankPanel();
+                addGamePanel();
+                setGameRestart();
+            }
+        });
+
+        buttonPanel.setPreferredSize(new Dimension(1000,100));
+
+
+        rankPanel.add(labelPanel);
+        rankPanel.add(tablePanel);
+        rankPanel.add(buttonPanel);
+
+        setContentPane(rankPanel);
+
     }
 
     public void addGamePanel(){
@@ -34,6 +92,21 @@ public class GameFrame extends JFrame {
         setGamePanels();
         GameTimer.init(timeLabel);
         setCards();
+    }
+
+    public void removeGamePanel(){
+        getContentPane().remove(cardPanel);
+        getContentPane().remove(menuPanel);
+        getContentPane().remove(timerPanel);
+        getContentPane().remove(mainPanel);
+        repaint();
+        getContentPane().revalidate();
+    }
+
+    public void removeRankPanel(){
+        getContentPane().remove(rankPanel);
+        repaint();
+        getContentPane().revalidate();
     }
 
     private void setCardLevel(){
@@ -95,17 +168,7 @@ public class GameFrame extends JFrame {
         startOverButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
-//                try{
-//                    Thread.sleep(500);
-//                } catch (Exception exception){
-//                    exception.getStackTrace();
-//
-//                }
-//
                 setGameRestart();
-
-
             }
         });
     }

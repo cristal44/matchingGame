@@ -1,11 +1,6 @@
 package com.company;
 
-import com.google.gson.Gson;
-
 import javax.swing.*;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.Writer;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -15,7 +10,7 @@ public class CardManager {
     private Pattern pattern;
     private static CardManager cardManager = null;
     private static int totalMatched = 0;
-    private static GameFrame frame;
+    private static GameFrame gameFrame;
 
     private List<Card> cards = new ArrayList<>();
     private List<Card> matchCards = new ArrayList<>();
@@ -36,8 +31,8 @@ public class CardManager {
         return cardManager;
     }
 
-    public static void init(int cardNumber, Pattern pattern, GameFrame gameFrame) {
-        frame = gameFrame;
+    public static void init(int cardNumber, Pattern pattern, GameFrame frame) {
+        gameFrame = frame;
         cardManager = new CardManager(cardNumber, pattern);
     }
 
@@ -82,30 +77,20 @@ public class CardManager {
                         GameTimer.getTimerInstance().stop();
                         System.out.println("NICE JOB");
                         try {
-                            Thread.sleep(800);
+                            Thread.sleep(500);
                         } catch (InterruptedException e) {
                             e.printStackTrace();
                         }
-//                        JOptionPane.showConfirmDialog(null, "Good Job!");
-                        String name = JOptionPane.showInputDialog(frame, "Please enter your name:");
+                        String name = JOptionPane.showInputDialog(gameFrame, "Please enter your name:");
                         System.out.println(name);
-                        Utils.getInstance().add(new User(name, GameTimer.getElapsedTime()));
+                        if (name != null) {
+                            Utils.getInstance().add(new User(name, GameTimer.getElapsedTime()));
+                            gameFrame.addRankPanel();
+                            gameFrame.removeGamePanel();
 
 
-
-//                        Utils.userList.add(new User(name,GameTimer.getElapsedTime()));
-//                        Writer writer = null;
-//                        try {
-//                            writer = new FileWriter(Utils.filename);
-//                            new Gson().toJson(Utils.userList,writer);
-//                            writer.close();
-//                        } catch (IOException e) {
-//                            e.printStackTrace();
-//                        }
-
+                        }
                     }
-
-
                 }
             });
         }

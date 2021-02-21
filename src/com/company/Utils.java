@@ -1,6 +1,8 @@
 package com.company;
 
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
 import java.io.*;
 import java.lang.reflect.Type;
 import java.util.*;
@@ -21,17 +23,32 @@ public class Utils {
         return utils;
     }
 
+    public List<User> getList(){
+
+        return userList;
+    }
+
+    public  String[][] getUserList(){
+        String[][] data1 = new String[userList.size()][3];
+        for (int i = 0; i < userList.size(); i++) {
+                data1[i][0] = String.valueOf(i+1);
+                data1[i][1] = userList.get(i).getName();
+                data1[i][2] = GameTimer.convertToTimeString(userList.get(i).getTime());
+        }
+
+        return data1;
+    }
+
     public void add(User user){
+        userList.sort(Comparator.comparing(User::getTime));
         if (userList.size() < 10) {
             userList.add(user);
-            userList.sort(Comparator.comparing(User::getTime));
             write();
         } else {
             User minUser = userList.get(9);
             if (user.getTime() < minUser.getTime()){
                 userList.remove(minUser);
                 userList.add(user);
-                userList.sort(Comparator.comparing(User::getTime));
                 write();
             }
         }
@@ -55,7 +72,12 @@ public class Utils {
         try {
             BufferedReader br = new BufferedReader(
                     new FileReader(filename));
-            userArray = new Gson().fromJson(br, (Type) User[].class);
+
+            Type type = new TypeToken<List<User>>(){}.getType();
+            userArray = new Gson().fromJson(br, type);
+
+
+
             br.close();
 
         } catch (Exception e) {

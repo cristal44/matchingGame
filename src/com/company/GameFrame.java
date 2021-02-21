@@ -4,12 +4,15 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 public class GameFrame extends JFrame {
     private Pattern pattern;
     private Level level;
     private MenuButton homeButton, playButton, pauseButton, startOverButton;
-    private GamePanel mainPanel, menuPanel,cardPanel;
+    private GamePanel mainPanel, menuPanel,cardPanel, timerPanel;
+//    private JPanel timerPanel;
+    private JLabel timeLabel;
     private int cardRow = 0;
     private int cardCols = 0;
 
@@ -17,11 +20,20 @@ public class GameFrame extends JFrame {
         this.pattern =Pattern.getPattern(patternIndex);
         this.level =Level.getLevel(levelIndex);
 
-        setCardLevel();
+
+        Utils.getInstance().read();
         initialMenuButtons();
-        setPanels();
-        setCards();
+
         setupFrame();
+
+        addGamePanel();
+    }
+
+    public void addGamePanel(){
+        setCardLevel();
+        setGamePanels();
+        GameTimer.init(timeLabel);
+        setCards();
     }
 
     private void setCardLevel(){
@@ -42,11 +54,12 @@ public class GameFrame extends JFrame {
 
     private void setupFrame() {
         setSize(1000,800);
+
         setTitle("Memory Matching Game");
         setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        setContentPane(mainPanel);
+
     }
 
     private void backToStartFrame(){
@@ -69,19 +82,12 @@ public class GameFrame extends JFrame {
             }
         });
 
-        playButton = new MenuButton("Play");
-        playButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-
-            }
-        });
 
         pauseButton = new MenuButton("Pause");
         pauseButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
+                GameTimer.getTimerInstance().stop();
             }
         });
 
@@ -90,46 +96,91 @@ public class GameFrame extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
 
+//                try{
+//                    Thread.sleep(500);
+//                } catch (Exception exception){
+//                    exception.getStackTrace();
+//
+//                }
+//
+                setGameRestart();
+
+
             }
         });
     }
 
+    private void setGameRestart(){
 
-    public void setPanels(){
+        GameTimer.getTimerInstance().stop();
+        System.out.println("GameTimer.getTimerInstance().stop();");
+        GameTimer.reset();
+
+        // clear cards list
+        CardManager.getInstance().resetCards();
+
+
+        // remove cardPanel from GameFrame
+        getContentPane().remove(cardPanel);
+//        getContentPane().remove(menuPanel);
+//        getContentPane().remove(timerPanel);
+//        getContentPane().remove(mainPanel);
+        repaint();
+        getContentPane().revalidate();
+
+
+        // adding an empty cardPanel
+        setCardPanel();
+        setCards();
+//        addGamePanel();
+
+    }
+
+
+    public void setGamePanels(){
         mainPanel = new GamePanel();
 
         menuPanel = new GamePanel();
-        menuPanel.setPreferredSize(new Dimension(1000,100));
+        menuPanel.setPreferredSize(new Dimension(800,100));
         menuPanel.add(homeButton);
-        menuPanel.add(playButton);
         menuPanel.add(pauseButton);
         menuPanel.add(startOverButton);
 
-        cardPanel = new GamePanel();
-        cardPanel.setLayout(new GridLayout(cardRow, cardCols,10,10));
+        timerPanel = new GamePanel();
+        timeLabel = new JLabel("00:00:00");
+        timeLabel.setFont(new Font("dialog", Font.BOLD, 14));
+        timeLabel.setPreferredSize(new Dimension(100, 50));
+        timeLabel.setOpaque(true);
+        timeLabel.setHorizontalAlignment(SwingConstants.CENTER);
+        timerPanel.add(timeLabel);
+        timerPanel.setBorder(BorderFactory.createLineBorder(Color.WHITE));
 
         mainPanel.add(menuPanel);
+        mainPanel.add(timerPanel);
+        setCardPanel();
+
+        setContentPane(mainPanel);
+    }
+
+    public void setCardPanel(){
+        cardPanel = new GamePanel();
+        cardPanel.setLayout(new GridLayout(cardRow, cardCols,10,10));
         mainPanel.add(cardPanel);
     }
 
     public void setCards(){
-        for (int i = 0; i < cardRow * cardCols; i++) {
-            JButton button = new JButton();
-            button.setSize(150, 200);
-            button.setOpaque(true);
-            ImageIcon imageIcon = new ImageIcon("src/images/orange.jpg");
-            int offset = button.getInsets().left;
-            button.setIcon(resizeIcon(imageIcon, button.getWidth()-offset, button.getHeight()-offset));
-            button.setBorder(BorderFactory.createLineBorder(Color.white, 2));
+        CardManager.init(cardRow*cardCols, pattern,this);
+        java.util.List<Card> cardList = CardManager.getInstance().generateCards();
 
-            cardPanel.add(button);
+        for (Card card : cardList) {
+            cardPanel.add(card);
+            card.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    card.onClick();
+                    GameTimer.getTimerInstance().start();
+                }
+            });
         }
-    }
-
-
-    private Icon resizeIcon(ImageIcon icon, int resizedWidth, int resizedHeight) {
-        Image img = icon.getImage();
-        Image resizedImage = img.getScaledInstance(resizedWidth, resizedHeight, Image.SCALE_SMOOTH);
-        return new ImageIcon(resizedImage);
     }
 }

@@ -18,28 +18,28 @@ public class GamePanel extends JPanel {
         setBackground(new Color(102, 163, 255));
         setOpaque(true);
 
-        this.pattern =Pattern.getPattern(patternIndex);
+        this.pattern =Patterns.getInstance().getPattern(patternIndex);
         this.level =Level.getLevel(levelIndex);
 
-        setCardLevel();
         PlayerFile.getInstance().read();
+        setCardLevel();
 
+        setMenuPanel();
+        setTimePanel();
+        setCardPanel();
+
+        setCards();
+    }
+
+    private void setMenuPanel() {
         menuPanel = new Panel();
         menuPanel.setBorder(BorderFactory.createEmptyBorder(10, 0, 0, 0));
+
         setButtons();
         menuPanel.add(homeButton);
         menuPanel.add(pauseButton);
         menuPanel.add(startOverButton);
         add(menuPanel);
-
-        timerPanel = new Panel();
-        setTimeLable();
-        add(timerPanel);
-        GameTimer.init(timeLabel);
-        GameTimer.reset();
-
-        setCardPanel();
-        setCards();
     }
 
     private void setCardLevel(){
@@ -65,7 +65,9 @@ public class GamePanel extends JPanel {
         add(cardPanel);
     }
 
-    private void setTimeLable(){
+    private void setTimePanel(){
+        timerPanel = new Panel();
+
         timeLabel = new JLabel("00:00:00");
         timeLabel.setFont(new Font("dialog", Font.BOLD, 14));
         timeLabel.setPreferredSize(new Dimension(100, 50));
@@ -75,6 +77,12 @@ public class GamePanel extends JPanel {
         timerPanel.add(timeLabel);
         timerPanel.setPreferredSize(new Dimension(110,60));
         timerPanel.setBorder(BorderFactory.createLineBorder(Color.WHITE));
+
+
+        GameTimer.init(timeLabel);
+        GameTimer.reset();
+
+        add(timerPanel);
     }
 
     private void setButtons() {

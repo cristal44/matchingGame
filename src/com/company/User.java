@@ -18,12 +18,4 @@ public class User {
     public int getTime() {
         return time;
     }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public void setTime(int time) {
-        this.time = time;
-    }
 }

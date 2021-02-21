@@ -16,10 +16,6 @@ public class RankPanel extends JPanel {
         setLablePanel();
         setTablePanel();
         setButtonPanel();
-
-        add(labelPanel);
-        add(tablePanel);
-        add(buttonPanel);
     }
 
     private void setLablePanel(){
@@ -30,6 +26,7 @@ public class RankPanel extends JPanel {
         label.setForeground(Color.WHITE);
         label.setFont(new Font("dialog", Font.BOLD, 28));
         labelPanel.add(label);
+        add(labelPanel);
     }
 
     private void setTablePanel(){
@@ -50,6 +47,7 @@ public class RankPanel extends JPanel {
         table.setDefaultRenderer(String.class, centerRenderer);
 
         tablePanel.add(table);
+        add(tablePanel);
     }
 
     private void setButtonPanel(){
@@ -73,6 +71,8 @@ public class RankPanel extends JPanel {
                 Frame.getInstance().removeRankPanel(Frame.game);
             }
         });
+
+        add(buttonPanel);
     }
 
 }

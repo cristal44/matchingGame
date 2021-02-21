@@ -74,7 +74,7 @@ public class StartPanel extends JPanel {
                 JOptionPane.NO_OPTION,
                 JOptionPane.PLAIN_MESSAGE,
                 null
-                , Pattern.getPatternList(),
+                , Patterns.getInstance().getPatternList(),
                 "default");
 
         int levelIndex = JOptionPane.showOptionDialog(null ,

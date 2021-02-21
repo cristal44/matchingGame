@@ -45,10 +45,6 @@ public class GameTimer{
         label.setText(String.format("%02d:%02d:%02d",hour,minute,second));
     }
 
-//    public static String timeString(){
-//        return String.format("%02d:%02d:%02d",hour,minute,second);
-//    }
-
     public static int getElapsedTime() {
         return elapsedTime;
     }

@@ -14,18 +14,6 @@ public class CardManager {
     private List<Card> cards = new ArrayList<>();
     private List<Card> matchCards = new ArrayList<>();
 
-    private String[] patternList = {
-            "src/images/p1.png",
-            "src/images/p2.png",
-            "src/images/p3.png",
-            "src/images/p4.png",
-            "src/images/p5.jpeg",
-            "src/images/a1.jpg",
-            "src/images/a2.jpg",
-            "src/images/a3.png",
-            "src/images/a4.png",
-    };
-
     public static CardManager getInstance(){
         return cardManager;
     }
@@ -41,11 +29,13 @@ public class CardManager {
     }
 
     public List<Card> generateCards(){
+        List<String> patternList = Patterns.getInstance().getPatterns(pattern);
+        Collections.shuffle(patternList);
         int number = cardNumber/2;
 
         for (int i = 0; i < number; i++){
-            Card card1 = new Card(i,patternList[i]);
-            Card card2 = new Card(i,patternList[i]);
+            Card card1 = new Card(i,patternList.get(i));
+            Card card2 = new Card(i,patternList.get(i));
             cards.add(card1);
             cards.add(card2);
         }

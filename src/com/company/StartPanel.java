@@ -77,6 +77,10 @@ public class StartPanel extends JPanel {
                 , Patterns.getInstance().getPatternList(),
                 "default");
 
+        if (patternIndex < 0){
+            return;
+        }
+
         int levelIndex = JOptionPane.showOptionDialog(null ,
                 "Choose a Game Level:",
                 "Game Level",
@@ -85,6 +89,10 @@ public class StartPanel extends JPanel {
                 null
                 ,Level.getLevelList(),
                 "default");
+
+        if (levelIndex < 0){
+            return;
+        }
 
         Frame.getInstance().removeStartPanel(patternIndex, levelIndex);
     }

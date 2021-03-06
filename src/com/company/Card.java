@@ -21,7 +21,11 @@ public class Card extends JButton {
     }
 
     public void setCardImage(String icon){
-        setIcon(new ImageIcon(new ImageIcon(icon).getImage().getScaledInstance(150,200,Image.SCALE_SMOOTH)));
+        ImageIcon imageIcon = new ImageIcon(icon);
+        Image image = imageIcon.getImage().getScaledInstance(150,200,Image.SCALE_SMOOTH);
+
+        ImageIcon cardImageIcon = new ImageIcon(image);
+        setIcon(cardImageIcon);
     }
 
     public int getId() {

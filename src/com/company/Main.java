@@ -11,7 +11,8 @@ public class Main {
             @Override
             public void run() {
                 Frame frame = Frame.getInstance();
-                frame.addPanel(StartPanel.getInstance());
+                StartPanel startPanel = StartPanel.getInstance();
+                frame.addPanel(startPanel);
             }
         });
     }

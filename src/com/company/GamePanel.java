@@ -11,15 +11,10 @@ public class GamePanel extends JPanel {
     private JLabel timeLabel;
     private int cardRow = 0;
     private int cardCols = 0;
-    private Pattern pattern;
-    public static Level level;
 
-    public GamePanel(int patternIndex, int levelIndex) {
+    public GamePanel() {
         setBackground(new Color(102, 163, 255));
         setOpaque(true);
-
-        pattern =Patterns.getInstance().getPattern(patternIndex);
-        level =Level.getLevel(levelIndex);
 
         PlayerFile.getInstance().read();
         setCardLevel();
@@ -43,7 +38,7 @@ public class GamePanel extends JPanel {
     }
 
     private void setCardLevel(){
-        switch (level){
+        switch (Frame.level){
             case Easy:
                 cardRow = 2;
                 cardCols = 4;
@@ -90,7 +85,7 @@ public class GamePanel extends JPanel {
         homeButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                Frame.getInstance().removeGamePanel(Frame.start);
+                Frame.getInstance().removeGamePanel(Frame.selection);
             }
         });
 
@@ -113,7 +108,6 @@ public class GamePanel extends JPanel {
 
     private void setGameRestart(){
         GameTimer.getTimerInstance().stop();
-        System.out.println("GameTimer.getTimerInstance().stop();");
         GameTimer.reset();
 
         CardManager.getInstance().resetCards();
@@ -126,7 +120,7 @@ public class GamePanel extends JPanel {
     }
 
     public void setCards(){
-        CardManager.init(cardRow*cardCols, pattern);
+        CardManager.init(cardRow*cardCols);
         CardManager.getInstance().resetCards();
 
         java.util.List<Card> cardList = CardManager.getInstance().generateCards();

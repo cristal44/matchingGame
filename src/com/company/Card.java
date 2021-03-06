@@ -55,7 +55,6 @@ public class Card extends JButton {
             isFlipped = true;
             setCardImage(backIcon);
         }
-        System.out.println(isFlipped);
         CardManager.getInstance().addToMatchList(this);
     }
 }

@@ -47,7 +47,10 @@ public class StartPanel extends JPanel {
         startButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                selectPatternAndLevel();
+                Frame.getInstance().removeStartPanel();
+
+
+//                selectPatternAndLevel();
             }
         });
 
@@ -67,34 +70,34 @@ public class StartPanel extends JPanel {
     }
 
 
-    private void selectPatternAndLevel() {
-        int patternIndex = JOptionPane.showOptionDialog(null ,
-                "Choose a Game Mode:",
-                "Game Mode",
-                JOptionPane.NO_OPTION,
-                JOptionPane.PLAIN_MESSAGE,
-                null
-                , Patterns.getInstance().getPatternList(),
-                "default");
-
-        if (patternIndex < 0){
-            return;
-        }
-
-        int levelIndex = JOptionPane.showOptionDialog(null ,
-                "Choose a Game Level:",
-                "Game Level",
-                JOptionPane.NO_OPTION,
-                JOptionPane.PLAIN_MESSAGE,
-                null
-                ,Level.getLevelList(),
-                "default");
-
-        if (levelIndex < 0){
-            return;
-        }
-
-        Frame.getInstance().removeStartPanel(patternIndex, levelIndex);
-    }
+//    private void selectPatternAndLevel() {
+//        int patternIndex = JOptionPane.showOptionDialog(null ,
+//                "Choose a Game Mode:",
+//                "Game Mode",
+//                JOptionPane.NO_OPTION,
+//                JOptionPane.PLAIN_MESSAGE,
+//                null
+//                , Patterns.getInstance().getPatternList(),
+//                "default");
+//
+//        if (patternIndex < 0){
+//            return;
+//        }
+//
+//        int levelIndex = JOptionPane.showOptionDialog(null ,
+//                "Choose a Game Level:",
+//                "Game Level",
+//                JOptionPane.NO_OPTION,
+//                JOptionPane.PLAIN_MESSAGE,
+//                null
+//                ,Level.getLevelList(),
+//                "default");
+//
+//        if (levelIndex < 0){
+//            return;
+//        }
+//
+//        Frame.getInstance().removeStartPanel(patternIndex, levelIndex);
+//    }
 
 }

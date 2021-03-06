@@ -7,7 +7,6 @@ import java.util.List;
 
 public class CardManager {
     private int cardNumber;
-    private Pattern pattern;
     private static CardManager cardManager = null;
     private static int totalMatched = 0;
 
@@ -18,18 +17,16 @@ public class CardManager {
         return cardManager;
     }
 
-    public static void init(int cardNumber, Pattern pattern) {
-
-        cardManager = new CardManager(cardNumber, pattern);
+    public static void init(int cardNumber) {
+        cardManager = new CardManager(cardNumber);
     }
 
-    private CardManager(int cardNumber, Pattern pattern) {
+    private CardManager(int cardNumber) {
         this.cardNumber = cardNumber;
-        this.pattern = pattern;
     }
 
     public List<Card> generateCards(){
-        List<String> patternList = Patterns.getInstance().getPatterns(pattern);
+        List<String> patternList = Patterns.getInstance().getPatterns(Frame.pattern);
         Collections.shuffle(patternList);
         int number = cardNumber/2;
 
@@ -64,18 +61,18 @@ public class CardManager {
 
                     if (totalMatched == cardNumber) {
                         GameTimer.getTimerInstance().stop();
-                        System.out.println("NICE JOB");
                         try {
                             Thread.sleep(500);
                         } catch (InterruptedException e) {
                             e.printStackTrace();
                         }
                         String name = JOptionPane.showInputDialog(Frame.getInstance(), "Please enter your name:");
-                        System.out.println(name);
-                        if (name != null) {
-                            PlayerFile.getInstance().add(new User(name, GameTimer.getElapsedTime()));
-                            Frame.getInstance().removeGamePanel(Frame.rank);
+
+                        while (name == null) {
+                            name = JOptionPane.showInputDialog(Frame.getInstance(), "Please enter your name:");
                         }
+                        PlayerFile.getInstance().add(new User(name, GameTimer.getElapsedTime()));
+                        Frame.getInstance().removeGamePanel(Frame.rank);
                     }
                 }
             });

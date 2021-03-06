@@ -32,7 +32,6 @@ public class GameTimer{
                 second = (elapsedTime/1000) % 60;
 
                 label.setText(String.format("%02d:%02d:%02d",hour,minute,second));
-                System.out.println(elapsedTime);
             }
         });
     }

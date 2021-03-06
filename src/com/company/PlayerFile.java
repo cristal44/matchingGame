@@ -77,12 +77,11 @@ public class PlayerFile {
             e.printStackTrace();
         }
         setCurrentUserList(userArray);
-        System.out.println("ddd");
     }
 
 
     private void setCurrentUserList(List<User> list){
-        switch (GamePanel.level){
+        switch (Frame.level){
             case Easy:
                 userList1 = list;
                 break;
@@ -98,7 +97,7 @@ public class PlayerFile {
 
     private List<User> getCurrentUserList(){
         List<User> list = new ArrayList<>();
-        switch (GamePanel.level){
+        switch (Frame.level){
             case Easy:
                 list = userList1;
                 break;
@@ -113,7 +112,7 @@ public class PlayerFile {
     }
 
     private void setFilename(){
-        switch (GamePanel.level){
+        switch (Frame.level){
             case Easy:
                 filename = "users1.json";
                 break;

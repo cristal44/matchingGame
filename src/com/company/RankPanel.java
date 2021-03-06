@@ -22,7 +22,7 @@ public class RankPanel extends JPanel {
         labelPanel = new Panel();
         labelPanel.setPreferredSize(new Dimension(1000,100));
         labelPanel.setLayout(new GridBagLayout());
-        JLabel label = new JLabel("Top 10 Players (Level: "+ GamePanel.level +")");
+        JLabel label = new JLabel("Top 10 Players (Level: "+ Frame.level +")");
         label.setForeground(Color.WHITE);
         label.setFont(new Font("dialog", Font.BOLD, 28));
         labelPanel.add(label);
@@ -58,7 +58,7 @@ public class RankPanel extends JPanel {
         homeButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                Frame.getInstance().removeRankPanel(Frame.start);
+                Frame.getInstance().removeRankPanel(Frame.selection);
             }
         });
         buttonPanel.add(homeButton);

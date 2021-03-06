@@ -64,15 +64,6 @@ public class Patterns {
             "src/images/disney/c9.jpg"
     };
 
-    public String[] getPatternList(){
-        return Arrays.stream(Pattern.values()).map(e -> e.toString()).toArray(String[]::new);
-    }
-
-    public Pattern getPattern(int index){
-        return Pattern.values()[index];
-    }
-
-
     public List<String> getPatterns(Pattern pattern) {
         List<String> list = new ArrayList<>();
         switch (pattern){

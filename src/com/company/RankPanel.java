@@ -7,33 +7,48 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class RankPanel extends JPanel {
-    private Panel labelPanel, tablePanel, buttonPanel;
 
     public RankPanel(){
-        setBackground(new Color(102, 163, 255));
-        setOpaque(true);
+        setPanelColor();
 
-        setLablePanel();
+        setLabelPanel();
         setTablePanel();
         setButtonPanel();
     }
 
-    private void setLablePanel(){
-        labelPanel = new Panel();
+    private void setPanelColor() {
+        setBackground(new Color(102, 163, 255));
+        setOpaque(true);
+    }
+
+    private void setLabelPanel(){
+        Panel labelPanel = new Panel();
         labelPanel.setPreferredSize(new Dimension(1000,100));
         labelPanel.setLayout(new GridBagLayout());
-        JLabel label = new JLabel("Top 10 Players (Level: "+ Frame.level +")");
-        label.setForeground(Color.WHITE);
-        label.setFont(new Font("dialog", Font.BOLD, 28));
-        labelPanel.add(label);
+
+        setLabel(labelPanel);
+
         add(labelPanel);
     }
 
+    private void setLabel(Panel labelPanel) {
+
+        JLabel label = new JLabel("Top 10 Players (Level: "+ Frame.level +")");
+        label.setForeground(Color.WHITE);
+        label.setFont(new Font("dialog", Font.BOLD, 28));
+
+        labelPanel.add(label);
+    }
+
     private void setTablePanel(){
-        tablePanel = new Panel();
+        Panel tablePanel = new Panel();
         tablePanel.setPreferredSize(new Dimension(1000,500));
 
+        setTable(tablePanel);
+        add(tablePanel);
+    }
 
+    private void setTable(Panel tablePanel) {
         String[] columnNames = {"", "", ""};
         String[][] data = PlayerFile.getInstance().getUserList();
 
@@ -47,13 +62,19 @@ public class RankPanel extends JPanel {
         table.setDefaultRenderer(String.class, centerRenderer);
 
         tablePanel.add(table);
-        add(tablePanel);
     }
 
     private void setButtonPanel(){
-        buttonPanel = new Panel();
+        Panel buttonPanel = new Panel();
         buttonPanel.setPreferredSize(new Dimension(1000,100));
 
+        setHomeButton(buttonPanel);
+        setRestartButton(buttonPanel);
+
+        add(buttonPanel);
+    }
+
+    private void setHomeButton(Panel buttonPanel){
         MenuButton homeButton = new MenuButton("Home");
         homeButton.addActionListener(new ActionListener() {
             @Override
@@ -61,10 +82,12 @@ public class RankPanel extends JPanel {
                 Frame.getInstance().removeRankPanel(Frame.selection);
             }
         });
-        buttonPanel.add(homeButton);
 
+        buttonPanel.add(homeButton);
+    }
+
+    private void setRestartButton(Panel buttonPanel){
         MenuButton restartButton = new MenuButton("Restart");
-        buttonPanel.add(restartButton);
         restartButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -72,7 +95,9 @@ public class RankPanel extends JPanel {
             }
         });
 
-        add(buttonPanel);
+
+        buttonPanel.add(restartButton);
     }
+
 
 }

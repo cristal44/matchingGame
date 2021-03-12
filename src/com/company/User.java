@@ -1,7 +1,5 @@
 package com.company;
 
-import java.io.Serializable;
-
 public class User {
     private String name;
     private int time;

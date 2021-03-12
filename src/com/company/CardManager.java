@@ -53,10 +53,7 @@ public class CardManager {
                         e.printStackTrace();
                     }
                     a.setVisible(false);
-                    a.setMatched(true);
                     b.setVisible(false);
-                    b.setMatched(true);
-
                     totalMatched += 2;
 
                     if (totalMatched == cardNumber) {

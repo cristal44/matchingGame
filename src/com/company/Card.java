@@ -8,7 +8,6 @@ public class Card extends JButton {
     private String coverIcon = "src/images/orange.jpg";
     private String backIcon = "";
     private boolean isFlipped = false;
-    private boolean isMatched = false;
 
     public Card(int id, String backIcon){
         this.id = id;
@@ -36,14 +35,6 @@ public class Card extends JButton {
         return isFlipped;
     }
 
-    public boolean isMatched() {
-        return isMatched;
-    }
-
-    public void setMatched(boolean matched) {
-        isMatched = matched;
-    }
-
     public void closeCard() {
         setCardImage(coverIcon);
         isFlipped = false;
@@ -54,11 +45,11 @@ public class Card extends JButton {
             setCardImage(coverIcon);
             isFlipped = false;
 
-
         } else {
             isFlipped = true;
             setCardImage(backIcon);
         }
+
         CardManager.getInstance().addToMatchList(this);
     }
 }

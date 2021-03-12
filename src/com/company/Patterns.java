@@ -4,8 +4,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-enum Pattern {Disney, Animals, Fruit, Pokemon};
-
 public class Patterns {
     private static Patterns patterns = null;
 

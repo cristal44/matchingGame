@@ -6,10 +6,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class SelectionPanel extends JPanel {
-    private Panel backPanel, patternLabelPanel, patternPanel, levelLabelPanel, levelPanel, submitPanel;
-    private SelectionButton pokemonButton, fruitButton, animalOverButton, disneyOverButton;
+    private SelectionButton pokemonButton, fruitButton, animalButton, disneyButton;
     private SelectionButton easyButton, mediumButton, hardButton;
-    private MenuButton submitButton;
 
     private Pattern pattern = null;
     private Level level = null;
@@ -27,13 +25,16 @@ public class SelectionPanel extends JPanel {
         setSubmitPanel();
     }
 
-
-
     private void setBackPanel() {
-        backPanel = new Panel();
+        Panel backPanel = new Panel();
         backPanel.setBorder(BorderFactory.createEmptyBorder(20, 0, 0, 0));
         backPanel.setPreferredSize(new Dimension(1000,100));
 
+        setbackButton(backPanel);
+        add(backPanel);
+    }
+
+    private void setbackButton(Panel backPanel) {
         MenuButton backButton = new MenuButton("Back");
         backButton.addActionListener(new ActionListener() {
             @Override
@@ -43,59 +44,25 @@ public class SelectionPanel extends JPanel {
         });
 
         backPanel.add(backButton);
-        add(backPanel);
     }
 
-    private void setSubmitPanel() {
-        submitPanel = new Panel();
-
-        submitPanel.setBorder(BorderFactory.createEmptyBorder(180, 0, 0, 0));
-        submitPanel.setPreferredSize(new Dimension(1000,300));
-
-
-        submitButton = new MenuButton("Start Game");
-        submitButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                if (pattern == null || level == null ) {
-                    JOptionPane.showMessageDialog(null,
-                            "You need to choose a pattern and a level to start the game");
-                } else {
-                    Frame.getInstance().removeSelectionPanel(SelectionPanel.this, pattern, level);
-                }
-            }
-        });
-
-        submitButton.setPreferredSize(new Dimension(500,50));
-
-
-        submitPanel.add(submitButton);
-        add(submitPanel);
-
-    }
 
     private void levelLabelPanel() {
-        levelLabelPanel = new Panel();
+        Panel levelLabelPanel = new Panel();
         levelLabelPanel.setPreferredSize(new Dimension(1000,80));
         levelLabelPanel.setBorder(BorderFactory.createEmptyBorder(20, 0, 0, 0));
 
-        JLabel label = new JLabel("Choose a Game Level:");
-        label.setForeground(Color.WHITE);
-        label.setFont(new Font("dialog", Font.BOLD, 28));
+        setLabel(levelLabelPanel, "Choose a Game Level:");
 
-        levelLabelPanel.add(label);
         add(levelLabelPanel);
     }
 
-    private void setLevelPanel() {
-        levelPanel = new Panel();
-        levelPanel.setPreferredSize(new Dimension(1000,100));
+    private void setLabel(Panel labelPanel, String message) {
+        JLabel label = new JLabel(message);
+        label.setForeground(Color.WHITE);
+        label.setFont(new Font("dialog", Font.BOLD, 28));
 
-        setLevelBotton();
-        levelPanel.add(easyButton);
-        levelPanel.add(mediumButton);
-        levelPanel.add(hardButton);
-        add(levelPanel);
+        labelPanel.add(label);
     }
 
 
@@ -113,10 +80,108 @@ public class SelectionPanel extends JPanel {
         button.setForeground(Color.BLACK);
     }
 
+    private void patternLabelPanel() {
+        Panel patternLabelPanel = new Panel();
+        patternLabelPanel.setBorder(BorderFactory.createEmptyBorder(20, 0, 0, 0));
+        patternLabelPanel.setPreferredSize(new Dimension(1000,80));
 
-    private void setLevelBotton() {
+        setLabel(patternLabelPanel, "Choose a Game Pattern:");
+
+        add(patternLabelPanel);
+    }
+
+
+    private void setPatternPanel() {
+        Panel patternPanel = new Panel();
+        patternPanel.setPreferredSize(new Dimension(1000,100));
+
+        add(patternPanel);
+
+        setPokemonButton(patternPanel);
+        setFruitButton(patternPanel);
+        setAnimalButton(patternPanel);
+        setDisneyButton(patternPanel);
+
+    }
+
+    private void setPokemonButton(Panel patternPanel){
+        pokemonButton = new SelectionButton("Pokemon");
+        patternPanel.add(pokemonButton);
+
+        pokemonButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                pattern = Pattern.Pokemon;
+                setSelectedLevelButton(pokemonButton,
+                        new SelectionButton[]{fruitButton, animalButton,disneyButton});
+            }
+        });
+    }
+
+    private void setFruitButton(Panel patternPanel){
+        fruitButton = new SelectionButton("Fruit");
+        patternPanel.add(fruitButton);
+
+        fruitButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                pattern = Pattern.Fruit;
+                setSelectedLevelButton(fruitButton,
+                        new SelectionButton[]{pokemonButton, animalButton,disneyButton});
+            }
+        });
+
+
+    }
+
+    private void setAnimalButton(Panel patternPanel){
+        animalButton = new SelectionButton("Animal");
+        patternPanel.add(animalButton);
+
+
+        animalButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                pattern = Pattern.Animals;
+                setSelectedLevelButton(animalButton,
+                        new SelectionButton[]{pokemonButton, fruitButton,disneyButton});
+            }
+        });
+
+    }
+
+    private void setDisneyButton(Panel patternPanel){
+        disneyButton = new SelectionButton("Disney");
+        patternPanel.add(disneyButton);
+
+        disneyButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                pattern = Pattern.Disney;
+                setSelectedLevelButton(disneyButton,
+                        new SelectionButton[]{pokemonButton, animalButton,fruitButton});
+            }
+        });
+
+    }
+
+    private void setLevelPanel() {
+        Panel levelPanel = new Panel();
+        levelPanel.setPreferredSize(new Dimension(1000,100));
+
+        setEasyButton(levelPanel);
+        setMediumButton(levelPanel);
+        setHardButton(levelPanel);
+
+        add(levelPanel);
+    }
+
+    private void setEasyButton(Panel levelPanel) {
         easyButton = new SelectionButton("Easy");
         setButtonColorBlack(easyButton);
+
+        levelPanel.add(easyButton);
+
         easyButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -126,8 +191,14 @@ public class SelectionPanel extends JPanel {
             }
         });
 
+    }
+
+    private void setMediumButton(Panel levelPanel) {
         mediumButton = new SelectionButton("Medium");
         setButtonColorBlack(mediumButton);
+
+        levelPanel.add(mediumButton);
+
         mediumButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -135,9 +206,16 @@ public class SelectionPanel extends JPanel {
                 setSelectedLevelButton(mediumButton,new SelectionButton[]{hardButton, easyButton});
             }
         });
+    }
 
+
+
+    private void setHardButton(Panel levelPanel) {
         hardButton = new SelectionButton("Hard");
         setButtonColorBlack(hardButton);
+
+        levelPanel.add(hardButton);
+
         hardButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -145,75 +223,37 @@ public class SelectionPanel extends JPanel {
                 setSelectedLevelButton(hardButton, new SelectionButton[]{easyButton, mediumButton});
             }
         });
-    }
 
-    private void patternLabelPanel() {
-        patternLabelPanel = new Panel();
-        patternLabelPanel.setBorder(BorderFactory.createEmptyBorder(20, 0, 0, 0));
-        patternLabelPanel.setPreferredSize(new Dimension(1000,80));
-
-        JLabel label = new JLabel("Choose a Game Pattern:");
-        label.setForeground(Color.WHITE);
-        label.setFont(new Font("dialog", Font.BOLD, 28));
-
-        patternLabelPanel.add(label);
-        add(patternLabelPanel);
     }
 
 
-    private void setPatternPanel() {
-        patternPanel = new Panel();
-        patternPanel.setPreferredSize(new Dimension(1000,100));
+    private void setSubmitPanel() {
+        Panel submitPanel = new Panel();
 
-        setPatternButtons();
-        patternPanel.add(pokemonButton);
-        patternPanel.add(fruitButton);
-        patternPanel.add(animalOverButton);
-        patternPanel.add(disneyOverButton);
-        add(patternPanel);
+        submitPanel.setBorder(BorderFactory.createEmptyBorder(180, 0, 0, 0));
+        submitPanel.setPreferredSize(new Dimension(1000,300));
+
+        setSubmitButton(submitPanel);
+
+        add(submitPanel);
     }
 
-    private void setPatternButtons() {
-        pokemonButton = new SelectionButton("Pokemon");
-        pokemonButton.addActionListener(new ActionListener() {
+    private void setSubmitButton(Panel submitPanel) {
+        MenuButton submitButton = new MenuButton("Start Game");
+        submitButton.setPreferredSize(new Dimension(500,50));
+
+        submitButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                pattern = Pattern.Pokemon;
-                setSelectedLevelButton(pokemonButton,
-                        new SelectionButton[]{fruitButton, animalOverButton,disneyOverButton});
+                if (pattern == null || level == null ) {
+                    JOptionPane.showMessageDialog(null,
+                            "You need to choose a pattern and a level to start the game");
+                } else {
+                    Frame.getInstance().removeSelectionPanel(SelectionPanel.this, pattern, level);
+                }
             }
         });
 
-
-        fruitButton = new SelectionButton("Fruit");
-        fruitButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                pattern = Pattern.Fruit;
-                setSelectedLevelButton(fruitButton,
-                        new SelectionButton[]{pokemonButton, animalOverButton,disneyOverButton});
-            }
-        });
-
-        animalOverButton = new SelectionButton("Animal");
-        animalOverButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                pattern = Pattern.Animals;
-                setSelectedLevelButton(animalOverButton,
-                        new SelectionButton[]{pokemonButton, fruitButton,disneyOverButton});
-            }
-        });
-
-
-        disneyOverButton = new SelectionButton("Disney");
-        disneyOverButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                pattern = Pattern.Disney;
-                setSelectedLevelButton(disneyOverButton,
-                        new SelectionButton[]{pokemonButton, animalOverButton,fruitButton});
-            }
-        });
+        submitPanel.add(submitButton);
     }
 }

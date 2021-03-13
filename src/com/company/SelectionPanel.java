@@ -39,7 +39,8 @@ public class SelectionPanel extends JPanel {
         backButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                Frame.getInstance().removeSelectionPanel(SelectionPanel.this);
+                Frame.getInstance().setGamePatternAndLevel(null,null);
+                Frame.getInstance().removePanel(SelectionPanel.this);
             }
         });
 
@@ -249,7 +250,11 @@ public class SelectionPanel extends JPanel {
                     JOptionPane.showMessageDialog(null,
                             "You need to choose a pattern and a level to start the game");
                 } else {
-                    Frame.getInstance().removeSelectionPanel(SelectionPanel.this, pattern, level);
+//                    Frame.getInstance().removeSelectionPanel(SelectionPanel.this, pattern, level);
+//                    Frame.getInstance().removeSelectionPanel(SelectionPanel.this);
+//                    Frame.getInstance().addGamePanel(pattern, level);
+                    Frame.getInstance().setGamePatternAndLevel(pattern,level);
+                    Frame.getInstance().removePanel(SelectionPanel.this);
                 }
             }
         });

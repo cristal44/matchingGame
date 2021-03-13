@@ -11,6 +11,7 @@ public class PlayerFile {
     private List<User> userList2 = new ArrayList<>();
     private List<User> userList3 = new ArrayList<>();
     private String filename = "";
+    private Level level;
 
     private static PlayerFile playerFile = null;
 
@@ -60,7 +61,8 @@ public class PlayerFile {
         }
     }
 
-    public void read(){
+    public void read(Level level){
+        this.level = level;
         setFilename();
         List<User> userArray = new ArrayList<>();
         File file = new File(filename);
@@ -81,7 +83,7 @@ public class PlayerFile {
 
 
     private void setCurrentUserList(List<User> list){
-        switch (Frame.level){
+        switch (level){
             case Easy:
                 userList1 = list;
                 break;
@@ -97,7 +99,7 @@ public class PlayerFile {
 
     private List<User> getCurrentUserList(){
         List<User> list = new ArrayList<>();
-        switch (Frame.level){
+        switch (level){
             case Easy:
                 list = userList1;
                 break;
@@ -112,7 +114,7 @@ public class PlayerFile {
     }
 
     private void setFilename(){
-        switch (Frame.level){
+        switch (level){
             case Easy:
                 filename = "users1.json";
                 break;

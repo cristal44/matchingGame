@@ -7,8 +7,10 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class RankPanel extends JPanel {
+    private Level level;
 
-    public RankPanel(){
+    public RankPanel(Level level){
+        this.level = level;
         setPanelColor();
 
         setLabelPanel();
@@ -32,8 +34,7 @@ public class RankPanel extends JPanel {
     }
 
     private void setLabel(Panel labelPanel) {
-
-        JLabel label = new JLabel("Top 10 Players (Level: "+ Frame.level +")");
+        JLabel label = new JLabel("Top 10 Players (Level: "+ level.toString() +")");
         label.setForeground(Color.WHITE);
         label.setFont(new Font("dialog", Font.BOLD, 28));
 
@@ -79,7 +80,7 @@ public class RankPanel extends JPanel {
         homeButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                Frame.getInstance().removeRankPanel(Frame.selection);
+                Frame.getInstance().removePanel(RankPanel.this);
             }
         });
 
@@ -91,7 +92,8 @@ public class RankPanel extends JPanel {
         restartButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                Frame.getInstance().removeRankPanel(Frame.game);
+                Frame.getInstance().setRestartGame(true);
+                Frame.getInstance().removePanel(RankPanel.this);
             }
         });
 

@@ -5,7 +5,6 @@ import java.awt.event.ActionListener;
 
 public class GameTimer{
     private static Timer timer;
-
     private static int hour = 0;
     private static int minute = 0;
     private static int second = 0;

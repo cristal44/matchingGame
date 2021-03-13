@@ -47,7 +47,7 @@ public class StartPanel extends JPanel {
         startButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                Frame.getInstance().removeStartPanel();
+                Frame.getInstance().removePanel(StartPanel.this);
             }
         });
 

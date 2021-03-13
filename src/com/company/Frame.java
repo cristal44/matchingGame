@@ -3,16 +3,12 @@ package com.company;
 import javax.swing.*;
 
 public class Frame extends JFrame {
-    public static final String selection = "SELEXCTIONFRAME";
-    public static final String rank = "RANKFRAME";
-    public static final String game = "GAMEFRAME";
-
     private static Frame frame = null;
-    private JPanel gamePanels;
-    private JPanel rankPanels;
-
-    public static Pattern pattern;
-    public static Level level;
+    private JPanel removedPanel;
+    private Boolean isFromCardManager = false;
+    private Boolean isRestartGame = false;
+    private Pattern pattern = null;
+    private Level level = null;
 
     public static Frame getInstance(){
         if (frame==null) {
@@ -28,42 +24,27 @@ public class Frame extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
 
-    public void removeStartPanel(){
-        removePanel(StartPanel.getInstance());
-        addPanel(new SelectionPanel());
+    public void setFromCardManager(Boolean fromCardManager) {
+        isFromCardManager = fromCardManager;
     }
 
-    public void removeGamePanel(String panelName) {
-        removePanel(gamePanels);
-
-        if (panelName.equals(selection) ) {
-            addPanel(new SelectionPanel());
-        }
-
-        if (panelName.equals(rank) ) {
-            rankPanels = new RankPanel();
-            addPanel(rankPanels);
-        }
+    public void setRestartGame(Boolean restartGame) {
+        isRestartGame = restartGame;
     }
 
-    public void removeRankPanel(String panelName){
-        removePanel(rankPanels);
-
-        if (panelName.equals(selection) ) {
-            addPanel(new SelectionPanel());
-        }
-
-        if (panelName.equals(game) ) {
-            gamePanels = new GamePanel();
-            addPanel(gamePanels);
-        }
+    public void setGamePatternAndLevel(Pattern pattern, Level level){
+        this.pattern = pattern;
+        this.level = level;
     }
 
 
-    private void removePanel(JPanel panel){
+    public void removePanel(JPanel panel){
         getContentPane().remove(panel);
         repaint();
         getContentPane().revalidate();
+
+        removedPanel = panel;
+        addPanel();
     }
 
     public void addPanel(JPanel panel){
@@ -71,17 +52,37 @@ public class Frame extends JFrame {
         setVisible(true);
     }
 
-    public void removeSelectionPanel(SelectionPanel selectionPanel, Pattern pattern, Level level) {
-        this.pattern = pattern;
-        this.level = level;
-        removePanel(selectionPanel);
+    public void addPanel(){
+        if (removedPanel != null) {
+            if (removedPanel.getClass() == StartPanel.class) {
+                addPanel(new SelectionPanel());
+            }
 
-        gamePanels = new GamePanel();
-        addPanel(gamePanels);
-    }
+            if (removedPanel.getClass() == SelectionPanel.class) {
+                if (pattern == null && level == null){
+                    addPanel(StartPanel.getInstance());
+                } else {
+                    addPanel(new GamePanel(pattern,level));
+                }
+            }
 
-    public void removeSelectionPanel(SelectionPanel selectionPanel) {
-        removePanel(selectionPanel);
-        addPanel(StartPanel.getInstance());
+            if (removedPanel.getClass() == GamePanel.class){
+                if (isFromCardManager){
+                    addPanel(new RankPanel(level));
+                    isFromCardManager = false;
+                } else {
+                    addPanel(new SelectionPanel());
+                }
+            }
+
+            if (removedPanel.getClass() == RankPanel.class){
+                if (isRestartGame){
+                    addPanel(new GamePanel(pattern,level));
+                    isRestartGame = false;
+                } else {
+                    addPanel(new SelectionPanel());
+                }
+            }
+        }
     }
 }

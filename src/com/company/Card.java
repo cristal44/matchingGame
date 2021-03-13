@@ -50,6 +50,6 @@ public class Card extends JButton {
             setCardImage(backIcon);
         }
 
-        CardManager.getInstance().addToMatchList(this);
+//        CardManager.getInstance().addToMatchList(this);
     }
 }

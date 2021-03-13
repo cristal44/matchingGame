@@ -9,12 +9,18 @@ public class GamePanel extends JPanel {
     private Panel cardPanel;
     private int cardRow = 0;
     private int cardCols = 0;
+    private Pattern pattern;
+    private Level level;
+    private CardManager cardManager;
 
-    public GamePanel() {
+    public GamePanel(Pattern pattern, Level level) {
+        this.pattern = pattern;
+        this.level = level;
+
         setBackground(new Color(102, 163, 255));
         setOpaque(true);
 
-        PlayerFile.getInstance().read();
+        PlayerFile.getInstance().read(level);
         setCardLevel();
 
         setMenuPanel();
@@ -41,7 +47,7 @@ public class GamePanel extends JPanel {
         homeButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                Frame.getInstance().removeGamePanel(Frame.selection);
+                Frame.getInstance().removePanel(GamePanel.this);
             }
         });
         menuPanel.add(homeButton);
@@ -75,7 +81,7 @@ public class GamePanel extends JPanel {
         GameTimer.getTimerInstance().stop();
         GameTimer.reset();
 
-        CardManager.getInstance().resetCards();
+        cardManager.resetCards();
         remove(cardPanel);
         repaint();
         revalidate();
@@ -110,7 +116,7 @@ public class GamePanel extends JPanel {
 
 
     private void setCardLevel(){
-        switch (Frame.level){
+        switch (level){
             case Easy:
                 cardRow = 2;
                 cardCols = 4;
@@ -134,10 +140,9 @@ public class GamePanel extends JPanel {
 
 
     public void setCards(){
-        CardManager.init(cardRow*cardCols);
-        CardManager.getInstance().resetCards();
+        cardManager = new CardManager(cardRow*cardCols, pattern, this);
 
-        java.util.List<Card> cardList = CardManager.getInstance().generateCards();
+        java.util.List<Card> cardList = cardManager.generateCards();
 
         for (Card card : cardList) {
             cardPanel.add(card);
@@ -145,6 +150,7 @@ public class GamePanel extends JPanel {
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     card.onClick();
+                    cardManager.addToMatchList(card);
                     GameTimer.getTimerInstance().start();
                 }
             });

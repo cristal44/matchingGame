@@ -7,26 +7,21 @@ import java.util.List;
 
 public class CardManager {
     private int cardNumber;
-    private static CardManager cardManager = null;
-    private static int totalMatched = 0;
+    private Pattern pattern;
+    private int totalMatched = 0;
+    private GamePanel gamePanel;
 
     private List<Card> cards = new ArrayList<>();
     private List<Card> matchCards = new ArrayList<>();
 
-    public static CardManager getInstance(){
-        return cardManager;
-    }
-
-    public static void init(int cardNumber) {
-        cardManager = new CardManager(cardNumber);
-    }
-
-    private CardManager(int cardNumber) {
+    public CardManager(int cardNumber, Pattern pattern, GamePanel gamePanel) {
         this.cardNumber = cardNumber;
+        this.pattern = pattern;
+        this.gamePanel = gamePanel;
     }
 
     public List<Card> generateCards(){
-        List<String> patternList = Patterns.getInstance().getPatterns(Frame.pattern);
+        List<String> patternList = Patterns.getInstance().getPatterns(pattern);
         Collections.shuffle(patternList);
         int number = cardNumber/2;
 
@@ -69,7 +64,8 @@ public class CardManager {
                             name = JOptionPane.showInputDialog(Frame.getInstance(), "Please enter your name:");
                         }
                         PlayerFile.getInstance().add(new User(name, GameTimer.getElapsedTime()));
-                        Frame.getInstance().removeGamePanel(Frame.rank);
+                        Frame.getInstance().setFromCardManager(true);
+                        Frame.getInstance().removePanel(gamePanel);
                     }
                 }
             });

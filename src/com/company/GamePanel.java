@@ -48,6 +48,7 @@ public class GamePanel extends JPanel {
             @Override
             public void actionPerformed(ActionEvent e) {
                 Frame.getInstance().removePanel(GamePanel.this);
+                Frame.getInstance().addSelectionPanel();
             }
         });
         menuPanel.add(homeButton);

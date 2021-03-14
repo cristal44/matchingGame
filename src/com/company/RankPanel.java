@@ -81,6 +81,7 @@ public class RankPanel extends JPanel {
             @Override
             public void actionPerformed(ActionEvent e) {
                 Frame.getInstance().removePanel(RankPanel.this);
+                Frame.getInstance().addSelectionPanel();
             }
         });
 
@@ -92,11 +93,10 @@ public class RankPanel extends JPanel {
         restartButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                Frame.getInstance().setRestartGame(true);
                 Frame.getInstance().removePanel(RankPanel.this);
+                Frame.getInstance().addGamePanel();
             }
         });
-
 
         buttonPanel.add(restartButton);
     }

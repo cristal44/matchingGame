@@ -6,16 +6,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class StartPanel extends JPanel {
-    private static StartPanel startPanel = null;
 
-    public static StartPanel getInstance(){
-        if (startPanel == null) {
-            startPanel = new StartPanel();
-        }
-        return startPanel;
-    }
-
-    private StartPanel() {
+    public StartPanel() {
         setLabel();
         setButtonPanel();
     }
@@ -48,6 +40,7 @@ public class StartPanel extends JPanel {
             @Override
             public void actionPerformed(ActionEvent e) {
                 Frame.getInstance().removePanel(StartPanel.this);
+                Frame.getInstance().addSelectionPanel();
             }
         });
 

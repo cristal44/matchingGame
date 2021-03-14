@@ -64,8 +64,8 @@ public class CardManager {
                             name = JOptionPane.showInputDialog(Frame.getInstance(), "Please enter your name:");
                         }
                         PlayerFile.getInstance().add(new User(name, GameTimer.getElapsedTime()));
-                        Frame.getInstance().setFromCardManager(true);
                         Frame.getInstance().removePanel(gamePanel);
+                        Frame.getInstance().addRankPanel();
                     }
                 }
             });

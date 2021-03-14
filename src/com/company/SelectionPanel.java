@@ -41,6 +41,7 @@ public class SelectionPanel extends JPanel {
             public void actionPerformed(ActionEvent e) {
                 Frame.getInstance().setGamePatternAndLevel(null,null);
                 Frame.getInstance().removePanel(SelectionPanel.this);
+                Frame.getInstance().addStartPanel();
             }
         });
 
@@ -131,8 +132,6 @@ public class SelectionPanel extends JPanel {
                         new SelectionButton[]{pokemonButton, animalButton,disneyButton});
             }
         });
-
-
     }
 
     private void setAnimalButton(Panel patternPanel){
@@ -209,8 +208,6 @@ public class SelectionPanel extends JPanel {
         });
     }
 
-
-
     private void setHardButton(Panel levelPanel) {
         hardButton = new SelectionButton("Hard");
         setButtonColorBlack(hardButton);
@@ -224,7 +221,6 @@ public class SelectionPanel extends JPanel {
                 setSelectedLevelButton(hardButton, new SelectionButton[]{easyButton, mediumButton});
             }
         });
-
     }
 
 
@@ -250,11 +246,9 @@ public class SelectionPanel extends JPanel {
                     JOptionPane.showMessageDialog(null,
                             "You need to choose a pattern and a level to start the game");
                 } else {
-//                    Frame.getInstance().removeSelectionPanel(SelectionPanel.this, pattern, level);
-//                    Frame.getInstance().removeSelectionPanel(SelectionPanel.this);
-//                    Frame.getInstance().addGamePanel(pattern, level);
                     Frame.getInstance().setGamePatternAndLevel(pattern,level);
                     Frame.getInstance().removePanel(SelectionPanel.this);
+                    Frame.getInstance().addGamePanel();
                 }
             }
         });

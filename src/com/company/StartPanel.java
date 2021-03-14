@@ -6,6 +6,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class StartPanel extends JPanel {
+    private static final int START_IMAGE_WIDTH = 1000;
+    private static final int START_IMAGE_HEIGHT = 700;
+    private static final Dimension BUTTON_DIMENSION = new Dimension(500,50);
 
     public StartPanel() {
         setLabel();
@@ -17,7 +20,7 @@ public class StartPanel extends JPanel {
 
         ImageIcon imageIcon = new ImageIcon("src/images/cover2.jpeg");
         Image image = imageIcon.getImage();
-        Image newImage = image.getScaledInstance(1000,700, Image.SCALE_SMOOTH);
+        Image newImage = image.getScaledInstance(START_IMAGE_WIDTH,START_IMAGE_HEIGHT, Image.SCALE_SMOOTH);
 
         label.setIcon(new ImageIcon(newImage));
 
@@ -62,7 +65,7 @@ public class StartPanel extends JPanel {
     }
 
     private void setButtonSize(JButton button){
-        button.setSize(500,50);
-        button.setPreferredSize(new Dimension(500,50));
+        button.setSize(BUTTON_DIMENSION);
+        button.setPreferredSize(BUTTON_DIMENSION);
     }
 }

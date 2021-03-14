@@ -4,6 +4,9 @@ import javax.swing.*;
 import java.awt.*;
 
 public class SelectionButton extends JButton {
+    private static final Dimension DIMENSION = new Dimension(150,80);
+    private static final Dimension PRE_DIMENSION = new Dimension(120,60);
+
     public SelectionButton(String name) {
         setText(name);
         setRequestColor();
@@ -16,7 +19,7 @@ public class SelectionButton extends JButton {
     }
 
     private void setRequestSize() {
-        setSize(150,80);
-        setPreferredSize(new Dimension(120,60));
+        setSize(DIMENSION);
+        setPreferredSize(PRE_DIMENSION);
     }
 }

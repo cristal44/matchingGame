@@ -1,8 +1,11 @@
 package com.company;
 
 import javax.swing.*;
+import java.awt.*;
 
 public class Frame extends JFrame {
+    private static final Dimension FRAME_SIZE = new Dimension(1000,800);
+
     private static Frame frame = null;
     private Pattern pattern;
     private Level level;
@@ -15,7 +18,7 @@ public class Frame extends JFrame {
     }
 
     private Frame(){
-        setSize(1000,800);
+        setSize(FRAME_SIZE);
         setTitle("Memory Matching Game");
         setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

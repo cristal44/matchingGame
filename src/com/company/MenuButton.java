@@ -4,13 +4,15 @@ import javax.swing.*;
 import java.awt.*;
 
 public class MenuButton extends JButton {
+    private Dimension dimension = new Dimension(100,50);
+
     public MenuButton(String name) {
         setText(name);
         setup();
     }
 
     public void setup(){
-       setSize(100,50);
-       setPreferredSize(new Dimension(100,50));
+        setSize(dimension);
+        setPreferredSize(new Dimension(dimension));
     }
 }

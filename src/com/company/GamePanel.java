@@ -7,17 +7,31 @@ import java.awt.event.ActionListener;
 
 public class GamePanel extends JPanel {
     private Panel cardPanel;
-    private int cardRow = 0;
-    private int cardCols = 0;
+    private int cardRow;
+    private int cardCols;
     private Pattern pattern;
     private Level level;
     private CardManager cardManager;
+
+//    private static final Color MY_BLUE = new Color(102, 163, 255);
+    private static final Dimension TIMER_PANEL_DIMENSION = new Dimension(110,60);
+    private static final Dimension TIMER_LABEL_DIMENSION = new Dimension(100,50);
+    private static final int TIME_LABEL_SIZE = 14;
+    private static final int GAP = 10;
+    private static final int TOP = 30;
+
+//    private static final int COLS = 4;
+//    private static final int HARD_COLS = 6;
+//    private static final int ROWS = 3;
+//    private static final int EASY_ROWS = 2;
+    private static final int BORDER = 0;
+
 
     public GamePanel(Pattern pattern, Level level) {
         this.pattern = pattern;
         this.level = level;
 
-        setBackground(new Color(102, 163, 255));
+        setBackground(PanelColor.getPanelColor().getBlue());
         setOpaque(true);
 
         PlayerFile.getInstance().read(level);
@@ -32,7 +46,7 @@ public class GamePanel extends JPanel {
 
     private void setMenuPanel() {
         Panel menuPanel = new Panel();
-        menuPanel.setBorder(BorderFactory.createEmptyBorder(10, 0, 0, 0));
+        menuPanel.setBorder(BorderFactory.createEmptyBorder(GAP, BORDER, BORDER, BORDER));
 
         setHomeButton(menuPanel);
         setPauseButton(menuPanel);
@@ -96,7 +110,7 @@ public class GamePanel extends JPanel {
         Panel timerPanel = new Panel();
 
         setTimeLabel(timerPanel);
-        timerPanel.setPreferredSize(new Dimension(110,60));
+        timerPanel.setPreferredSize(TIMER_PANEL_DIMENSION);
         timerPanel.setBorder(BorderFactory.createLineBorder(Color.WHITE));
 
         add(timerPanel);
@@ -104,8 +118,8 @@ public class GamePanel extends JPanel {
 
     private void setTimeLabel(Panel timerPanel) {
         JLabel timeLabel = new JLabel("00:00:00");
-        timeLabel.setFont(new Font("dialog", Font.BOLD, 14));
-        timeLabel.setPreferredSize(new Dimension(100, 50));
+        timeLabel.setFont(new Font("dialog", Font.BOLD, TIME_LABEL_SIZE));
+        timeLabel.setPreferredSize(TIMER_LABEL_DIMENSION);
         timeLabel.setOpaque(true);
         timeLabel.setHorizontalAlignment(SwingConstants.CENTER);
 
@@ -118,6 +132,18 @@ public class GamePanel extends JPanel {
 
     private void setCardLevel(){
         switch (level){
+//            case Easy:
+//                cardRow = EASY_ROWS;
+//                cardCols = COLS;
+//                break;
+//            case Medium:
+//                cardRow = ROWS;
+//                cardCols = COLS;
+//                break;
+//            case Hard:
+//                cardRow = ROWS;
+//                cardCols = HARD_COLS;
+
             case Easy:
                 cardRow = 2;
                 cardCols = 4;
@@ -134,8 +160,8 @@ public class GamePanel extends JPanel {
 
     public void setCardPanel(){
         cardPanel = new Panel();
-        cardPanel.setLayout(new GridLayout(cardRow, cardCols,10,10));
-        cardPanel.setBorder(BorderFactory.createEmptyBorder(30, 0, 0, 0));
+        cardPanel.setLayout(new GridLayout(cardRow, cardCols,GAP,GAP));
+        cardPanel.setBorder(BorderFactory.createEmptyBorder(TOP, BORDER, BORDER, BORDER));
         add(cardPanel);
     }
 

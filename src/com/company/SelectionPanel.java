@@ -1,11 +1,24 @@
 package com.company;
 
 import javax.swing.*;
+import javax.swing.border.Border;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class SelectionPanel extends JPanel {
+    private static final Dimension PANEL_DIMENSION = new Dimension(1000,100);
+    private static final Dimension LEVEL_LABEL_PANEL_DIMENSION = new Dimension(1000,80);
+    private static final Dimension SUBMIT_BUTTON_DIMENSION = new Dimension(500,50);
+    private static final Dimension SUBMIT_PANEL_DIMENSION = new Dimension(1000,300);
+
+
+    private static final int BORDER_TOP = 20;
+    private static final int BORDER_ZERO = 0;
+    private static final int BORDER_SUBMIT_PANEL_TOP = 180;
+    private static final int LABEL_FONT_SIZE = 28;
+
+
     private SelectionButton pokemonButton, fruitButton, animalButton, disneyButton;
     private SelectionButton easyButton, mediumButton, hardButton;
 
@@ -13,7 +26,7 @@ public class SelectionPanel extends JPanel {
     private Level level = null;
 
     public SelectionPanel(){
-        setBackground(new Color(102, 163, 255));
+        setBackground(PanelColor.getPanelColor().getBlue());
         setOpaque(true);
         setLayout(new FlowLayout());
 
@@ -27,8 +40,8 @@ public class SelectionPanel extends JPanel {
 
     private void setBackPanel() {
         Panel backPanel = new Panel();
-        backPanel.setBorder(BorderFactory.createEmptyBorder(20, 0, 0, 0));
-        backPanel.setPreferredSize(new Dimension(1000,100));
+        backPanel.setBorder(BorderFactory.createEmptyBorder(BORDER_TOP, BORDER_ZERO, BORDER_ZERO, BORDER_ZERO));
+        backPanel.setPreferredSize(PANEL_DIMENSION);
 
         setbackButton(backPanel);
         add(backPanel);
@@ -48,12 +61,11 @@ public class SelectionPanel extends JPanel {
         backPanel.add(backButton);
     }
 
-
     private void levelLabelPanel() {
         Panel levelLabelPanel = new Panel();
-        levelLabelPanel.setPreferredSize(new Dimension(1000,80));
-        levelLabelPanel.setBorder(BorderFactory.createEmptyBorder(20, 0, 0, 0));
+        levelLabelPanel.setBorder(BorderFactory.createEmptyBorder(BORDER_TOP, BORDER_ZERO, BORDER_ZERO, BORDER_ZERO));
 
+        levelLabelPanel.setPreferredSize(LEVEL_LABEL_PANEL_DIMENSION);
         setLabel(levelLabelPanel, "Choose a Game Level:");
 
         add(levelLabelPanel);
@@ -62,7 +74,7 @@ public class SelectionPanel extends JPanel {
     private void setLabel(Panel labelPanel, String message) {
         JLabel label = new JLabel(message);
         label.setForeground(Color.WHITE);
-        label.setFont(new Font("dialog", Font.BOLD, 28));
+        label.setFont(new Font("dialog", Font.BOLD, LABEL_FONT_SIZE));
 
         labelPanel.add(label);
     }
@@ -84,8 +96,8 @@ public class SelectionPanel extends JPanel {
 
     private void patternLabelPanel() {
         Panel patternLabelPanel = new Panel();
-        patternLabelPanel.setBorder(BorderFactory.createEmptyBorder(20, 0, 0, 0));
-        patternLabelPanel.setPreferredSize(new Dimension(1000,80));
+        patternLabelPanel.setBorder(BorderFactory.createEmptyBorder(BORDER_TOP, BORDER_ZERO, BORDER_ZERO, BORDER_ZERO));
+        patternLabelPanel.setPreferredSize(LEVEL_LABEL_PANEL_DIMENSION);
 
         setLabel(patternLabelPanel, "Choose a Game Pattern:");
 
@@ -95,7 +107,7 @@ public class SelectionPanel extends JPanel {
 
     private void setPatternPanel() {
         Panel patternPanel = new Panel();
-        patternPanel.setPreferredSize(new Dimension(1000,100));
+        patternPanel.setPreferredSize(PANEL_DIMENSION);
 
         add(patternPanel);
 
@@ -167,7 +179,7 @@ public class SelectionPanel extends JPanel {
 
     private void setLevelPanel() {
         Panel levelPanel = new Panel();
-        levelPanel.setPreferredSize(new Dimension(1000,100));
+        levelPanel.setPreferredSize(PANEL_DIMENSION);
 
         setEasyButton(levelPanel);
         setMediumButton(levelPanel);
@@ -227,8 +239,8 @@ public class SelectionPanel extends JPanel {
     private void setSubmitPanel() {
         Panel submitPanel = new Panel();
 
-        submitPanel.setBorder(BorderFactory.createEmptyBorder(180, 0, 0, 0));
-        submitPanel.setPreferredSize(new Dimension(1000,300));
+        submitPanel.setBorder(BorderFactory.createEmptyBorder(BORDER_SUBMIT_PANEL_TOP, BORDER_ZERO, BORDER_ZERO, BORDER_ZERO));
+        submitPanel.setPreferredSize(SUBMIT_PANEL_DIMENSION);
 
         setSubmitButton(submitPanel);
 
@@ -237,8 +249,7 @@ public class SelectionPanel extends JPanel {
 
     private void setSubmitButton(Panel submitPanel) {
         MenuButton submitButton = new MenuButton("Start Game");
-        submitButton.setPreferredSize(new Dimension(500,50));
-
+        submitButton.setPreferredSize(SUBMIT_BUTTON_DIMENSION);
         submitButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {

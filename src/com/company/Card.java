@@ -4,6 +4,10 @@ import javax.swing.*;
 import java.awt.*;
 
 public class Card extends JButton {
+    private static final int THICKNESS = 2;
+    private static final int CARD_WIDTH = 150;
+    private static final int CARD_HEIGHT = 200;
+
     private int id;
     private String coverIcon = "src/images/orange.jpg";
     private String backIcon = "";
@@ -13,15 +17,15 @@ public class Card extends JButton {
         this.id = id;
         this.backIcon = backIcon;
 
-        setSize(150, 200);
+        setSize(CARD_WIDTH, CARD_HEIGHT);
         setOpaque(true);
-        setBorder(BorderFactory.createLineBorder(Color.white, 2));
+        setBorder(BorderFactory.createLineBorder(Color.white, THICKNESS));
         setCardImage(coverIcon);
     }
 
     public void setCardImage(String icon){
         ImageIcon imageIcon = new ImageIcon(icon);
-        Image image = imageIcon.getImage().getScaledInstance(150,200,Image.SCALE_SMOOTH);
+        Image image = imageIcon.getImage().getScaledInstance(CARD_WIDTH, CARD_HEIGHT,Image.SCALE_SMOOTH);
 
         ImageIcon cardImageIcon = new ImageIcon(image);
         setIcon(cardImageIcon);

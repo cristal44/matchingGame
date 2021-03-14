@@ -6,10 +6,13 @@ import java.util.Collections;
 import java.util.List;
 
 public class CardManager {
+    private static final int SLEEP_TIME = 300;
+    private static final int PAIR = 2;
+
     private int cardNumber;
     private Pattern pattern;
-    private int totalMatched = 0;
     private GamePanel gamePanel;
+    private int totalMatched;
 
     private List<Card> cards = new ArrayList<>();
     private List<Card> matchCards = new ArrayList<>();
@@ -23,7 +26,7 @@ public class CardManager {
     public List<Card> generateCards(){
         List<String> patternList = Patterns.getInstance().getPatterns(pattern);
         Collections.shuffle(patternList);
-        int number = cardNumber/2;
+        int number = cardNumber/PAIR;
 
         for (int i = 0; i < number; i++){
             Card card1 = new Card(i,patternList.get(i));
@@ -43,24 +46,24 @@ public class CardManager {
                 @Override
                 public void run() {
                     try {
-                        Thread.sleep(300);
+                        Thread.sleep(SLEEP_TIME);
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
                     a.setVisible(false);
                     b.setVisible(false);
-                    totalMatched += 2;
+                    totalMatched += PAIR;
 
                     if (totalMatched == cardNumber) {
                         GameTimer.getTimerInstance().stop();
                         try {
-                            Thread.sleep(500);
+                            Thread.sleep(SLEEP_TIME);
                         } catch (InterruptedException e) {
                             e.printStackTrace();
                         }
                         String name = JOptionPane.showInputDialog(Frame.getInstance(), "Please enter your name:");
 
-                        while (name == null) {
+                        while (name == null || name.isEmpty()) {
                             name = JOptionPane.showInputDialog(Frame.getInstance(), "Please enter your name:");
                         }
                         PlayerFile.getInstance().add(new User(name, GameTimer.getElapsedTime()));
@@ -84,11 +87,11 @@ public class CardManager {
 
         int size = matchCards.size();
 
-        if (size >= 2) {
+        if (size >= PAIR) {
             Card a = matchCards.get(0);
             Card b = matchCards.get(1);
 
-            if (size == 2) {
+            if (size == PAIR) {
                 matchCards(a, b);
             }
 

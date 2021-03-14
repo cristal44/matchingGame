@@ -9,7 +9,7 @@ public class Panel extends JPanel {
     }
 
     private void setBackgroundColor() {
-        setBackground(new Color(102, 163, 255));
+        setBackground(PanelColor.getPanelColor().getBlue());
         setOpaque(true);
     }
 }

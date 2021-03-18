@@ -1,5 +1,5 @@
 package com.company;
-
+import com.company.*;
 import static org.junit.Assert.assertNotNull;
 
 import org.junit.Test;

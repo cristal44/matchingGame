@@ -76,28 +76,28 @@ public class CardManagerTest {
 
     }
 
-    // @Test
-    // public void matchingTest(){
-    //     Pattern p1= Pattern.Disney;
-    //     Level l1 = Level.Easy;
-    //     GamePanel g1 = new GamePanel(p1, l1);
-    //     CardManager cm1 = new CardManager(10, p1, g1);
-    //     cm1.generateCards();
-    //     int prev = cm1.getTotalMatched();
-    //     Card c1 = cm1.getCards().get(0);
-    //     Card c2 = null;
-    //     for (int i = 1; i < cm1.getCards().size(); i++) {
-    //         if (cm1.getCards().get(i).getId() == c1.getId()){
-    //             c2 = cm1.getCards().get(i);
-    //         }
-    //     }
-    //     cm1.matchCards(c1, c2);
+    @Test
+    public void matchingTest(){
+        Pattern p1= Pattern.Disney;
+        Level l1 = Level.Easy;
+        GamePanel g1 = new GamePanel(p1, l1);
+        CardManager cm1 = new CardManager(10, p1, g1);
+        cm1.generateCards();
+        int prev = cm1.getTotalMatched();
+        Card c1 = cm1.getCards().get(0);
+        Card c2 = null;
+        for (int i = 1; i < cm1.getCards().size(); i++) {
+            if (cm1.getCards().get(i).getId() == c1.getId()){
+                c2 = cm1.getCards().get(i);
+            }
+        }
+        cm1.matchCards(c1, c2);
         
-    //     int cur = cm1.getTotalMatched();
-    //     assertEquals(prev + 2, cur);
+        int cur = cm1.getTotalMatched();
+        assertEquals(prev + 2, cur);
         
 
 
-    // }
+    }
 
 }

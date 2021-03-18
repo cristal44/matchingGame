@@ -16,13 +16,13 @@ public class PlayerFileTest{
         assertEquals(pf1,pf2);
     }
 
-    @Test
-    public void userListTest(){
-        PlayerFile pf1 = PlayerFile.getInstance();
-        User u1 = new User("John", 100);
-        pf1.add(u1);
-        assertEquals(1, pf1.getUserList().length);
+    // @Test
+    // public void userListTest(){
+    //     PlayerFile pf1 = PlayerFile.getInstance();
+    //     User u1 = new User("John", 100);
+    //     pf1.add(u1);
+    //     assertEquals(1, pf1.getUserList().length);
 
 
-    }
+    // }
 }

@@ -42,9 +42,9 @@ public class CardManager {
 
     public void matchCards(Card a, Card b){
         if (a.getId() == b.getId()) {
-            //SwingUtilities.invokeLater(new Runnable() {
-                //@Override
-                //public void run() {
+            SwingUtilities.invokeLater(new Runnable() {
+                @Override
+                public void run() {
                     try {
                         Thread.sleep(SLEEP_TIME);
                     } catch (InterruptedException e) {
@@ -70,8 +70,8 @@ public class CardManager {
                         Frame.getInstance().removePanel(gamePanel);
                         Frame.getInstance().addRankPanel();
                     }
-                //}
-            //});
+                }
+            });
         }
 
     }

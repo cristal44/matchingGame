@@ -109,5 +109,9 @@ public class RankPanel extends JPanel {
         buttonPanel.add(restartButton);
     }
 
+    public Level getLevel(){
+        return level;
+    }
+
 
 }
